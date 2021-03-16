@@ -10,7 +10,7 @@ def parse_command(user_input):
     user_tokens = word_tokenize(new_user_input.lower())
     filtered_sentence = [w for w in user_tokens if w not in stop_words]
 
-    google_link = "https://www.google.com.search?g="
+    google_link = "https://www.google.com/search?q="
     for i in range(len(filtered_sentence)):
         google_link = google_link + filtered_sentence[i]
 

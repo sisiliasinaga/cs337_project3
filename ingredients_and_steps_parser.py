@@ -6,6 +6,8 @@ nltk.download('averaged_perceptron_tagger')
 from nltk import pos_tag, word_tokenize
 import re
 import string
+from vague_how_tos import questions
+import action_parser
 # from transform import replace_ingredients, replace_instructions
 # from vegetarian_transform import vegetarian, not_vegetarian
 # from to_healthy_transform import to_healthy
@@ -289,6 +291,8 @@ def goOverSteps(title, steps, stepNumber, ingredients):
         print("[2] Go to the next step")
         print("[3] Go to the previous step")
         print("[4] Go to a specific step")
+        print("Confused? Say something like 'How do I do that?'")
+        print("\n")
         response = input("[0] Exit\n")
 
         if response == "0":
@@ -305,6 +309,11 @@ def goOverSteps(title, steps, stepNumber, ingredients):
             stepNumber = input("Which step would you like to go to? Type a number between 1 and " + str(len(steps)) + ".\n")
             stepNumber = int(stepNumber)
             goOverSteps(title, steps, stepNumber, ingredients)
+        elif response.lower().replace("?", "") in questions:
+            step = steps[stepNumber - 1]
+            link = action_parser.parse_command(step)
+            print("Here's what I found: " + link)
+            goOverSteps(title, steps, stepNumber, ingredients)
         else:
             invalid = True
             while invalid:
@@ -313,6 +322,8 @@ def goOverSteps(title, steps, stepNumber, ingredients):
                 print("[2] Go to the next step")
                 print("[3] Go to the previous step")
                 print("[4] Go to a specific step")
+                print("Confused? Say something like 'How do I do that?'")
+                print("\n")
                 response = input("[0] Exit\n")
 
                 if response == "0":
@@ -335,6 +346,11 @@ def goOverSteps(title, steps, stepNumber, ingredients):
                         "Which step would you like to go to? Type a number between 1 and " + str(len(steps)) + ".\n")
                     stepNumber = int(stepNumber)
                     goOverSteps(title, steps, stepNumber, ingredients)
+                elif response.lower().replace("?", "") in questions:
+                    step = steps[stepNumber - 1]
+                    link = action_parser.parse_command(step)
+                    print("Here's what I found: " + link)
+                    goOverSteps(title, steps, stepNumber, ingredients)
 
 
 
@@ -348,6 +364,8 @@ def goOverSteps(title, steps, stepNumber, ingredients):
         print("[2] Go to the first step")
         print("[3] Go to the last step")
         print("[4] Go to a specific step")
+        print("Confused? Say something like 'How do I do that?'")
+        print("\n")
         response = input("[0] Exit\n")
 
         if response == "0":
@@ -362,6 +380,11 @@ def goOverSteps(title, steps, stepNumber, ingredients):
         elif response == "4":
             stepNumber = input("Which step would you like to go to? Type a number between 1 and " + str(len(steps) + 1) + ".\n")
             stepNumber = int(stepNumber)
+            goOverSteps(title, steps, stepNumber, ingredients)
+        elif response.lower().replace("?", "") in questions:
+            step = steps[stepNumber - 1]
+            link = action_parser.parse_command(step)
+            print("Here's what I found: " + link)
             goOverSteps(title, steps, stepNumber, ingredients)
 
 def main(url):
