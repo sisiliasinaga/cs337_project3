@@ -1,4 +1,5 @@
 import nltk
+import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
@@ -6,7 +7,7 @@ from nltk.tokenize import word_tokenize
 def parse_command(user_input):
     stop_words = set(stopwords.words('english'))
     stop_words.remove('how')
-    new_user_input = user_input.replace('?', '')
+    new_user_input = re.sub(r'[^\w\s]', '', user_input)
     user_tokens = word_tokenize(new_user_input.lower())
     filtered_sentence = [w for w in user_tokens if w not in stop_words]
 

@@ -251,12 +251,18 @@ def goOverIngredients(title, ingredients, steps):
 
     print("\nWhat would you like to do?")
     print("[1] Go over the steps")
+    print("[2] Enter a new recipe")
     response = input("[0] Exit\n")
 
     if response == "0":
         exit(0)
     elif response == "1":
         goOverSteps(title, steps, 1, ingredients)
+    elif response == "2":
+        recipeUrl = input('Please enter a URL for a recipe from AllRecipes.com (enter 0 to exit): ')
+        if recipeUrl == '0':
+            exit(0)
+        main(recipeUrl)
     else:
         invalid = True
         while invalid:
@@ -291,6 +297,7 @@ def goOverSteps(title, steps, stepNumber, ingredients):
         print("[2] Go to the next step")
         print("[3] Go to the previous step")
         print("[4] Go to a specific step")
+        print("[5] Enter a different recipe")
         print("Confused? Say something like 'How do I do that?'")
         print("\n")
         response = input("[0] Exit\n")
@@ -309,9 +316,19 @@ def goOverSteps(title, steps, stepNumber, ingredients):
             stepNumber = input("Which step would you like to go to? Type a number between 1 and " + str(len(steps)) + ".\n")
             stepNumber = int(stepNumber)
             goOverSteps(title, steps, stepNumber, ingredients)
+        elif response == "5":
+            recipeUrl = input('Please enter a URL for a recipe from AllRecipes.com (enter 0 to exit): ')
+            if recipeUrl == '0':
+                exit(0)
+            main(recipeUrl)
         elif response.lower().replace("?", "") in questions:
             step = steps[stepNumber - 1]
-            link = action_parser.parse_command(step)
+            link = action_parser.parse_command("how do i " + step)
+            print("Here's what I found: " + link)
+            goOverSteps(title, steps, stepNumber, ingredients)
+        elif "how" in response.lower().replace("?", ""):
+            step = steps[stepNumber - 1]
+            link = action_parser.parse_command(response)
             print("Here's what I found: " + link)
             goOverSteps(title, steps, stepNumber, ingredients)
         else:
@@ -322,6 +339,7 @@ def goOverSteps(title, steps, stepNumber, ingredients):
                 print("[2] Go to the next step")
                 print("[3] Go to the previous step")
                 print("[4] Go to a specific step")
+                print("[5] Enter a different recipe")
                 print("Confused? Say something like 'How do I do that?'")
                 print("\n")
                 response = input("[0] Exit\n")
@@ -346,9 +364,19 @@ def goOverSteps(title, steps, stepNumber, ingredients):
                         "Which step would you like to go to? Type a number between 1 and " + str(len(steps)) + ".\n")
                     stepNumber = int(stepNumber)
                     goOverSteps(title, steps, stepNumber, ingredients)
+                elif response == "5":
+                    recipeUrl = input('Please enter a URL for a recipe from AllRecipes.com (enter 0 to exit): ')
+                    if recipeUrl == '0':
+                        exit(0)
+                    main(recipeUrl)
                 elif response.lower().replace("?", "") in questions:
                     step = steps[stepNumber - 1]
                     link = action_parser.parse_command(step)
+                    print("Here's what I found: " + link)
+                    goOverSteps(title, steps, stepNumber, ingredients)
+                elif "how" in response.lower().replace("?", ""):
+                    step = steps[stepNumber - 1]
+                    link = action_parser.parse_command(response)
                     print("Here's what I found: " + link)
                     goOverSteps(title, steps, stepNumber, ingredients)
 
