@@ -487,7 +487,7 @@ def main(url):
 
 
 if __name__ == '__main__':
-    recipeUrl = input('Please enter a URL for a recipe from AllRecipes.com (enter 0 to exit): ')
+    recipeUrl = input('Hi! My name is Chop Chop Bot. Please enter a URL for a recipe from AllRecipes.com (enter 0 to exit): ')
     if recipeUrl == '0':
         exit(0)
     main(recipeUrl)
